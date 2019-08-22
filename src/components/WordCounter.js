@@ -18,7 +18,7 @@ class WordCounter extends Component {
     };
 
     // Clear textarea
-    clearField = e => {
+    clearField = () => {
         this.setState({
             textareaValue: '',
             charsIncludingSpaces: 0,
@@ -42,7 +42,12 @@ class WordCounter extends Component {
     countWord = value => {
         const charsIncludingSpaces = value.length;
         const charsWithoutSpaces = value.replace(/\s+/g, '').length;
-        const wordCount = value.trim().replace(/\s{2,}/g, ' ').split(' ').length;
+        const wordCount = value.trim()
+            .replace(/\s{2,}/g, ' ')
+            .replace(/[^\w\s]/g, '')
+            .split(' ')
+            .filter(item => Boolean(item) === true).length;
+
         const sentenceCount = value.trim().replace(/\.{2,}/g, '.').split('.').filter(item => item.length !== 0).length;
 
         this.setState({
